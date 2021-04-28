@@ -2,6 +2,6 @@
 
 # ImanityFramework-IntelliJ-Plugin Changelog
 
+## [0.1.0]
 ### Added
-- Added basic features
-- Initial scaffold created from [IntelliJ Platform Plugin Template](https://github.com/JetBrains/intellij-platform-plugin-template)
+- Basic Inspections
