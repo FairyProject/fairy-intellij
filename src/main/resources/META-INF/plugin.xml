@@ -1,19 +1,33 @@
 <idea-plugin>
-    <id>org.jetbrains.plugins.template</id>
-    <name>Template</name>
-    <vendor>JetBrains</vendor>
+    <id>org.imanity.framework.intellij</id>
+    <name>ImanityFramework</name>
+    <vendor>Imanity Software</vendor>
 
     <!-- Product and plugin compatibility requirements -->
     <!-- https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
     <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.modules.java</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <applicationService serviceImplementation="org.jetbrains.plugins.template.services.MyApplicationService"/>
-        <projectService serviceImplementation="org.jetbrains.plugins.template.services.MyProjectService"/>
-    </extensions>
 
-    <applicationListeners>
-        <listener class="org.jetbrains.plugins.template.listeners.MyProjectManagerListener"
-                  topic="com.intellij.openapi.project.ProjectManagerListener"/>
-    </applicationListeners>
+        <!-- Project-independent Inspection Suppressors -->
+        <lang.inspectionSuppressor language="JAVA" implementationClass="org.imanity.framework.intellij.inspection.UnusedDeclarationSuppressor"/>
+        <lang.inspectionSuppressor language="JAVA" implementationClass="org.imanity.framework.intellij.inspection.FieldMayBeFinalSuppressor"/>
+
+        <localInspection displayName="Autowired target is not a bean."
+                         groupName="AutowiredBean"
+                         language="JAVA"
+                         enabledByDefault="true"
+                         level="ERROR"
+                         hasStaticDescription="true"
+                         implementationClass="org.imanity.framework.intellij.inspection.AutowiredBeanInspection"/>
+        <localInspection displayName="@Entity Class doesn't have no args constructor"
+                         groupName="SerializableConstructor"
+                         language="JAVA"
+                         enabledByDefault="true"
+                         level="ERROR"
+                         hasStaticDescription="true"
+                         implementationClass="org.imanity.framework.intellij.inspection.SerializableConstructorInspection"/>
+
+    </extensions>
 </idea-plugin>

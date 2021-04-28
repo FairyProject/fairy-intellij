@@ -6,6 +6,8 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 fun properties(key: String) = project.findProperty(key).toString()
 
 plugins {
+    java
+    idea
     // Java support
     id("java")
     // Kotlin support
@@ -30,6 +32,13 @@ repositories {
 }
 dependencies {
     detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.16.0")
+
+    // Lombok
+    compileOnly("org.projectlombok:lombok:1.18.20")
+    annotationProcessor("org.projectlombok:lombok:1.18.20")
+
+    testCompileOnly("org.projectlombok:lombok:1.18.20")
+    testAnnotationProcessor("org.projectlombok:lombok:1.18.20")
 }
 
 // Configure gradle-intellij-plugin plugin.
@@ -42,7 +51,15 @@ intellij {
     updateSinceUntilBuild = true
 
     // Plugin Dependencies. Uses `platformPlugins` property from the gradle.properties file.
-    setPlugins(*properties("platformPlugins").split(',').map(String::trim).filter(String::isNotEmpty).toTypedArray())
+    setPlugins(
+        "java",
+        "maven",
+        "gradle",
+        "Groovy",
+        // needed dependencies for unit tests
+        "properties",
+        "junit"
+    )
 }
 
 // Configure gradle-changelog-plugin plugin.
