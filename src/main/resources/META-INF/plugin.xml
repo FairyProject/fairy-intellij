@@ -1,12 +1,16 @@
 <idea-plugin>
     <id>org.imanity.framework.intellij</id>
-    <name>ImanityFramework</name>
+    <name>ImanityFramework IntelliJ Integration</name>
     <vendor>Imanity Software</vendor>
 
     <!-- Product and plugin compatibility requirements -->
     <!-- https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
     <depends>com.intellij.modules.platform</depends>
     <depends>com.intellij.modules.java</depends>
+
+    <description><![CDATA[
+      Imanity Framework IntelliJ Integration provides better experience while using Imanity Framework by more inspection checks to prevent mistakes happens
+    ]]></description>
 
     <extensions defaultExtensionNs="com.intellij">
 
