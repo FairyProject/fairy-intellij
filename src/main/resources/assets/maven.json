@@ -1,0 +1,14 @@
+{
+  "maven-compiler-plugin-version": "3.8.1",
+  "maven-gpg-plugin-version": "1.6",
+  "maven-javadoc-plugin-version": "3.2.0",
+  "maven-release-plugin-version": "3.0.0-M1",
+  "maven-shade-plugin-version": "3.2.4",
+  "maven-site-plugin-version": "3.9.1",
+  "maven-source-plugin-version": "3.2.0",
+  "templating-maven-plugin-version": "1.0.0",
+  "wagon-git-version": "2.0.4",
+  "doxia-module-markdown-version": "1.9.1",
+  "jcabi-maven-plugin-version": "0.14.1",
+  "jcabi-version": "1.9.2"
+}

@@ -1,5 +1,10 @@
 package org.imanity.framework.intellij.util;
 
+import com.intellij.openapi.command.WriteCommandAction;
+import com.intellij.openapi.editor.Document;
+import com.intellij.openapi.fileEditor.FileDocumentManager;
+import com.intellij.openapi.project.Project;
+import com.intellij.openapi.util.ThrowableComputable;
 import com.intellij.psi.*;
 import lombok.experimental.UtilityClass;
 
@@ -14,6 +19,10 @@ public class PsiUtil {
 
     public PsiField findContainingField(PsiElement element) {
         return findParent(element, PsiField.class, el -> el instanceof PsiClass);
+    }
+
+    public <T extends PsiElement> SmartPsiElementPointer<T> createSmartPointer(Project theProject, T element) {
+        return SmartPointerManager.getInstance(theProject).createSmartPsiElementPointer(element);
     }
 
     public <T extends PsiElement> T findParent(PsiElement element, Class<T> type, Function<PsiElement, Boolean> stop) {
@@ -33,6 +42,18 @@ public class PsiUtil {
                 return null;
             }
         }
+    }
+
+    public void runWriteAction(PsiFile file, Runnable runnable) throws Throwable {
+        WriteCommandAction.writeCommandAction(file).withGlobalUndo().compute((ThrowableComputable<Object, Throwable>) () -> {
+            runnable.run();
+            return null;
+        });
+        final Document document = FileDocumentManager.getInstance().getDocument(file.getVirtualFile());
+        if (document == null) {
+            return;
+        }
+        PsiDocumentManager.getInstance(file.getProject()).doPostponedOperationsAndUnblockDocument(document);
     }
 
 }

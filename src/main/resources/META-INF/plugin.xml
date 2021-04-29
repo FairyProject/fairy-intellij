@@ -1,18 +1,26 @@
 <idea-plugin>
     <id>org.imanity.framework.intellij</id>
-    <name>ImanityFramework IntelliJ Integration</name>
+    <name>ImanityFramework Integration</name>
     <vendor>Imanity Software</vendor>
 
     <!-- Product and plugin compatibility requirements -->
     <!-- https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
     <depends>com.intellij.modules.platform</depends>
     <depends>com.intellij.modules.java</depends>
+    <depends>org.jetbrains.idea.maven</depends>
+    <depends>com.intellij.gradle</depends>
+    <depends>org.intellij.groovy</depends>
 
     <description><![CDATA[
       Imanity Framework IntelliJ Integration provides better experience while using Imanity Framework by more inspection checks to prevent mistakes happens
     ]]></description>
 
     <extensions defaultExtensionNs="com.intellij">
+        <moduleType id="IMANITY_MODULE_TYPE" implementationClass="org.imanity.framework.intellij.modules.FrameworkModuleType"/>
+        <moduleBuilder id="IMANITY_MODULE" builderClass="org.imanity.framework.intellij.modules.FrameworkModuleBuilder"/>
+
+        <!-- File templates are for project creations -->
+        <fileTemplateGroup implementation="org.imanity.framework.intellij.modules.template.FrameworkTemplates"/>
 
         <!-- Project-independent Inspection Suppressors -->
         <lang.inspectionSuppressor language="JAVA" implementationClass="org.imanity.framework.intellij.inspection.UnusedDeclarationSuppressor"/>

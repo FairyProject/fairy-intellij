@@ -137,3 +137,15 @@ tasks {
         channels(properties("pluginVersion").split('-').getOrElse(1) { "default" }.split('.').first())
     }
 }
+
+tasks.processResources {
+    // These templates aren't allowed to be in a directory structure in the output jar
+    // But we have a lot of templates that would get real hard to deal with if we didn't have some structure
+    // So this just flattens out the fileTemplates/j2ee directory in the jar, while still letting us have directories
+    exclude("fileTemplates/j2ee/**")
+    from(fileTree("src/main/resources/fileTemplates/j2ee").files) {
+        eachFile {
+            relativePath = RelativePath(true, "fileTemplates", "j2ee", this.name)
+        }
+    }
+}
