@@ -19,15 +19,78 @@ public class BukkitTemplate extends BaseTemplate {
             BUKKIT_POM_TEMPLATE = "Bukkit pom.xml";
 
     public String applyMainClass(Project project, String packageName, String className, FrameworkProjectSystem projectSystem) throws IOException {
-        final Map<String, String> map = ImmutableMap.of(
-                "PACKAGE", packageName,
-                "CLASS_NAME", className,
-                "NAME", projectSystem.getArtifactId(),
-                "VERSION", projectSystem.getVersion(),
-                "DESCRIPTION", "TODO" //TODO
-        );
+        final ImmutableMap.Builder<String, String> builder = ImmutableMap.builder();
+        builder.put("PACKAGE", packageName)
+                .put("CLASS_NAME", className)
+                .put("NAME", projectSystem.getName())
+                .put("VERSION", projectSystem.getVersion())
+                .put("DESCRIPTION", projectSystem.getDescription());
 
-        return this.applyTemplate(project, BUKKIT_MAIN_CLASS_TEMPLATE, map);
+        // Depends
+        if (projectSystem.getDependencies().length > 0 || projectSystem.getSoftDependencies().length > 0) {
+            StringBuilder stringBuilder = new StringBuilder();
+            for (int i = 0; i < projectSystem.getDependencies().length; i++) {
+                String dependency = projectSystem.getDependencies()[i];
+
+                stringBuilder.append("@PluginDependency(")
+                        .append("\"")
+                        .append(dependency)
+                        .append("\"")
+                        .append(")");
+                if (i != projectSystem.getDependencies().length - 1 || projectSystem.getSoftDependencies().length > 0) {
+                    stringBuilder.append(", ");
+                }
+            }
+
+            for (int i = 0; i < projectSystem.getSoftDependencies().length; i++) {
+                String dependency = projectSystem.getSoftDependencies()[i];
+
+                stringBuilder.append("@PluginDependency(")
+                        .append("\"")
+                        .append(dependency)
+                        .append("\"")
+                        .append(", soft = true)");
+                if (i != projectSystem.getSoftDependencies().length - 1) {
+                    stringBuilder.append(", ");
+                }
+            }
+
+            builder.put("DEPEND", stringBuilder.toString());
+        }
+
+        // Load Before
+        if (projectSystem.getLoadBefore().length > 0) {
+            StringBuilder stringBuilder = new StringBuilder();
+            for (int i = 0; i < projectSystem.getLoadBefore().length; i++) {
+                String dependency = projectSystem.getLoadBefore()[i];
+
+                stringBuilder.append("\"").append(dependency).append("\"");
+                if (i != projectSystem.getLoadBefore().length - 1) {
+                    stringBuilder.append(", ");
+                }
+            }
+
+            builder.put("LOAD_BEFORE", stringBuilder.toString());
+        }
+
+        // Authors
+        if (projectSystem.getAuthors().length > 0) {
+            StringBuilder stringBuilder = new StringBuilder();
+            for (int i = 0; i < projectSystem.getAuthors().length; i++) {
+                String dependency = projectSystem.getAuthors()[i];
+
+                stringBuilder.append("\"").append(dependency).append("\"");
+                if (i != projectSystem.getAuthors().length - 1) {
+                    stringBuilder.append(", ");
+                }
+            }
+
+            builder.put("AUTHOR", stringBuilder.toString());
+        }
+
+        builder.put("LOAD_ORDER", projectSystem.getLoadOrder());
+
+        return this.applyTemplate(project, BUKKIT_MAIN_CLASS_TEMPLATE, builder.build());
     }
 
     public String applyPom(Project project) throws IOException {

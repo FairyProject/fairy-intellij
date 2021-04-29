@@ -20,8 +20,9 @@ import com.intellij.openapi.vfs.LocalFileSystem;
 import com.intellij.openapi.vfs.VirtualFile;
 import org.apache.commons.lang3.tuple.Pair;
 import org.imanity.framework.intellij.ImanityFrameworkAssets;
-import org.imanity.framework.intellij.modules.step.BuildSystemWizardStep;
-import org.imanity.framework.intellij.modules.step.FrameworkTypeWizardStep;
+import org.imanity.framework.intellij.modules.wizard.BuildSystemWizardStep;
+import org.imanity.framework.intellij.modules.wizard.BukkitWizardStep;
+import org.imanity.framework.intellij.modules.wizard.FrameworkTypeWizardStep;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -126,7 +127,8 @@ public class FrameworkModuleBuilder extends JavaModuleBuilder {
     @Override
     public ModuleWizardStep[] createWizardSteps(@NotNull WizardContext wizardContext, @NotNull ModulesProvider modulesProvider) {
         return new ModuleWizardStep[] {
-            new BuildSystemWizardStep(this.projectCreator)
+            new BuildSystemWizardStep(this.projectCreator),
+            new BukkitWizardStep(this.projectCreator)
         };
     }
 

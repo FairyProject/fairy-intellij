@@ -127,7 +127,7 @@ public class BasicMavenStep implements CreatorStep {
 
     public interface MavenStepFunction {
 
-        Object apply(BasicMavenStep step, MavenDomProjectModel mavenModel, XmlTag xmlTag);
+        void apply(BasicMavenStep step, MavenDomProjectModel mavenModel, XmlTag xmlTag);
 
     }
 
@@ -142,61 +142,56 @@ public class BasicMavenStep implements CreatorStep {
     public static class MavenStepFunctionDirectory implements MavenStepFunction {
 
         @Override
-        public Object apply(BasicMavenStep step, MavenDomProjectModel mavenModel, XmlTag xmlTag) {
+        public void apply(BasicMavenStep step, MavenDomProjectModel mavenModel, XmlTag xmlTag) {
             try {
                 step.getProjectSystem().setDirectory(DirectorySet.create(step.getDirectory()));
             } catch (IOException e) {
                 throw new IllegalArgumentException("An error occurs while creating directory", e);
             }
-            return null;
         }
     }
 
     public static class MavenStepCore implements MavenStepFunction {
 
         @Override
-        public Object apply(BasicMavenStep step, MavenDomProjectModel mavenModel, XmlTag xmlTag) {
+        public void apply(BasicMavenStep step, MavenDomProjectModel mavenModel, XmlTag xmlTag) {
             mavenModel.getGroupId().setStringValue(step.getProjectSystem().getGroupId());
             mavenModel.getArtifactId().setStringValue(step.getProjectSystem().getArtifactId());
             mavenModel.getVersion().setStringValue(step.getProjectSystem().getVersion());
-            return null;
         }
 
     }
 
     public static class MavenStepName implements MavenStepFunction {
         @Override
-        public Object apply(BasicMavenStep step, MavenDomProjectModel mavenModel, XmlTag xmlTag) {
-            mavenModel.getName().setStringValue(step.getProjectSystem().getArtifactId()); //TODO - Name
-            return null;
+        public void apply(BasicMavenStep step, MavenDomProjectModel mavenModel, XmlTag xmlTag) {
+            mavenModel.getName().setStringValue(step.getProjectSystem().getName());
         }
     }
 
     public static class MavenStepInfo implements MavenStepFunction {
         @Override
-        public Object apply(BasicMavenStep step, MavenDomProjectModel mavenModel, XmlTag xmlTag) {
-            // TODO - Description
-            return null;
+        public void apply(BasicMavenStep step, MavenDomProjectModel mavenModel, XmlTag xmlTag) {
+            mavenModel.getDescription().setStringValue(step.getProjectSystem().getDescription());
         }
     }
 
     public static class MavenStepDependencies implements MavenStepFunction {
         @Override
-        public Object apply(BasicMavenStep step, MavenDomProjectModel mavenModel, XmlTag xmlTag) {
-            for (FrameworkProjectSystem.BuildRepository repository : step.getProjectSystem().getRepositories()) {
+        public void apply(BasicMavenStep step, MavenDomProjectModel mavenModel, XmlTag xmlTag) {
+            for (FrameworkProjectSystem.BuildRepository repository : step.getProjectSystem().getBuildRepositories()) {
                 final MavenDomRepository mavenDomRepository = mavenModel.getRepositories().addRepository();
                 mavenDomRepository.getId().setStringValue(repository.getId());
                 mavenDomRepository.getUrl().setStringValue(repository.getUrl());
             }
 
-            for (FrameworkProjectSystem.BuildDependency dependency : step.getProjectSystem().getDependencies()) {
+            for (FrameworkProjectSystem.BuildDependency dependency : step.getProjectSystem().getBuildDependencies()) {
                 final MavenDomDependency mavenDomDependency = mavenModel.getDependencies().addDependency();
                 mavenDomDependency.getGroupId().setStringValue(dependency.getGroupId());
                 mavenDomDependency.getArtifactId().setStringValue(dependency.getArtifactId());
                 mavenDomDependency.getVersion().setStringValue(dependency.getVersion());
                 mavenDomDependency.getScope().setStringValue(dependency.getMavenScope());
             }
-            return null;
         }
     }
 

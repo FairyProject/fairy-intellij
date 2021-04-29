@@ -1,22 +1,29 @@
 package ${PACKAGE};
 
-import org.bukkit.plugin.java.JavaPlugin;
 import org.imanity.framework.ClasspathScan;
 import org.imanity.framework.bukkit.plugin.BukkitPlugin;
 import org.imanity.framework.plugin.Plugin;
 import org.imanity.framework.plugin.PluginLoadOrder;
 import org.imanity.framework.plugin.PluginType;
+#if (${DEPEND})
+import org.imanity.framework.plugin.PluginDependency;
+#end
 
 @Plugin(
-        name = "${NAME}",                                     // Plugin Name
-        version = "${VERSION}",                                    // Version
-        description = "${DESCRIPTION}",              // Descriptions
-        load = PluginLoadOrder.POSTWORLD,                     // Plugin Load Order
-        authors = "LeeGod",                                   // Authors
-//      depends = @PluginDependency("MyDependency")           // Dependency
-//      @PluginDependency("MySoftDependency", soft = true)    // For Soft Dependency
-//      loadBefore = "SomePlugin",
-        type = PluginType.BUKKIT                              // Type
+        name = "${NAME}",
+        version = "${VERSION}",
+        description = "${DESCRIPTION}",
+        load = PluginLoadOrder.${LOAD_ORDER},
+        #if (${AUTHOR})
+        authors = {${AUTHOR}},
+        #end
+        #if (${DEPEND})
+        depends = {${DEPEND}},
+        #end
+        #if (${LOAD_BEFORE})
+        loadBefore = {${LOAD_BEFORE}},
+        #end
+        type = PluginType.BUKKIT
 )
 @ClasspathScan("${PACKAGE}.${CLASS_NAME}") // Replace it with your package name
 public class ${CLASS_NAME} extends BukkitPlugin {

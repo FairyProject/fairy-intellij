@@ -2,7 +2,6 @@ package org.imanity.framework.intellij.modules.creator;
 
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.progress.ProgressIndicator;
-import com.intellij.openapi.project.Project;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.imanity.framework.intellij.modules.FrameworkProjectSystem;
@@ -86,13 +85,13 @@ public abstract class BukkitProjectCreator extends BaseProjectCreator {
 
         @Override
         public void run(ProgressIndicator indicator) {
-            this.projectSystem.getRepositories().add(
+            this.projectSystem.getBuildRepositories().add(
                     new FrameworkProjectSystem.BuildRepository(
                             "papermc-repo",
                             "https://papermc.io/repo/repository/maven-public/"
                     )
             );
-            this.projectSystem.getDependencies().add(
+            this.projectSystem.getBuildDependencies().add(
                     new FrameworkProjectSystem.BuildDependency(
                             "com.destroystokyo.paper",
                             "paper-api",
@@ -103,13 +102,13 @@ public abstract class BukkitProjectCreator extends BaseProjectCreator {
             );
 
             // Imanity Libraries
-            this.projectSystem.getRepositories().add(
+            this.projectSystem.getBuildRepositories().add(
                     new FrameworkProjectSystem.BuildRepository(
                             "imanity-libraries",
                             "https://maven.imanity.dev/repository/imanity-libraries/"
                     )
             );
-            this.projectSystem.getDependencies().add(
+            this.projectSystem.getBuildDependencies().add(
                     new FrameworkProjectSystem.BuildDependency(
                             "org.imanity.framework",
                             "bukkit-core",

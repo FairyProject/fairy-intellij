@@ -29,17 +29,23 @@ import java.util.Set;
 public class FrameworkProjectSystem {
 
     private final Set<Platform> platforms = new HashSet<>();
-    private final List<BuildRepository> repositories = new ArrayList<>();
-    private final List<BuildDependency> dependencies = new ArrayList<>();
+    private final List<BuildRepository> buildRepositories = new ArrayList<>();
+    private final List<BuildDependency> buildDependencies = new ArrayList<>();
 
     private String groupId;
     private String artifactId;
     private String version;
     private ProjectType projectType;
 
-    private String mainClass; // TODO
-
-    private DirectorySet directory; // TODO
+    private String name;
+    private String mainClass;
+    private String description;
+    private String[] authors;
+    private String[] dependencies;
+    private String[] softDependencies;
+    private String[] loadBefore;
+    private String loadOrder;
+    private DirectorySet directory;
 
     public DirectorySet getDirectoryOrError() {
         if (this.directory == null) {
@@ -95,7 +101,8 @@ public class FrameworkProjectSystem {
                     for (WorkLogStep step : workLog) {
                         step.printStep(workLogText);
                     }
-                    throw new ModuleBuilderException(workLogText.toString(), ex);
+
+                    this.onThrowable(new ModuleBuilderException(workLogText.toString(), ex));
                 } finally {
                     WorkLogStep.currentStep = null;
                 }

@@ -1,4 +1,4 @@
-package org.imanity.framework.intellij.modules.step;
+package org.imanity.framework.intellij.modules.wizard;
 
 import com.intellij.ide.util.projectWizard.ModuleWizardStep;
 import com.intellij.openapi.options.ConfigurationException;
@@ -9,6 +9,7 @@ import com.intellij.ui.awt.RelativePoint;
 import org.imanity.framework.intellij.modules.FrameworkProjectSystem;
 import org.imanity.framework.intellij.modules.exception.EmptyFieldModuleBuilderException;
 import org.imanity.framework.intellij.modules.exception.FieldModuleBuilderException;
+import org.imanity.framework.intellij.util.StringUtil;
 
 import javax.swing.*;
 
@@ -45,11 +46,11 @@ public class BuildSystemWizardStep extends ModuleWizardStep {
                 throw new EmptyFieldModuleBuilderException(this.versionField);
             }
 
-            if (!this.groupIdField.getText().matches(NO_SPACE)) {
+            if (StringUtil.isAnySpace(this.groupIdField.getText())) {
                 throw new FieldModuleBuilderException(this.groupIdField, "The Group ID Field must not contain any space!");
             }
 
-            if (!this.artifactIdField.getText().matches(NO_SPACE)) {
+            if (StringUtil.isAnySpace(this.groupIdField.getText())) {
                 throw new FieldModuleBuilderException(this.artifactIdField, "The Artifact ID Field must not contain any space!");
             }
 
@@ -72,7 +73,6 @@ public class BuildSystemWizardStep extends ModuleWizardStep {
         this.projectCreator.setGroupId(this.groupIdField.getText());
         this.projectCreator.setArtifactId(this.artifactIdField.getText());
         this.projectCreator.setVersion(this.versionField.getText());
-        this.projectCreator.setMainClass(this.projectCreator.getGroupId() + "." + this.projectCreator.getArtifactId());
 
         switch (this.projectTypeBox.getSelectedItem().toString()) {
             case "Maven":
@@ -87,5 +87,4 @@ public class BuildSystemWizardStep extends ModuleWizardStep {
         }
     }
 
-    private static final String NO_SPACE = "\\S+";
 }

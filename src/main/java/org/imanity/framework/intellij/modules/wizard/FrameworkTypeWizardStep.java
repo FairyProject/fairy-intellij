@@ -1,4 +1,4 @@
-package org.imanity.framework.intellij.modules.step;
+package org.imanity.framework.intellij.modules.wizard;
 
 import com.intellij.ide.util.projectWizard.ModuleWizardStep;
 import com.intellij.openapi.options.ConfigurationException;
