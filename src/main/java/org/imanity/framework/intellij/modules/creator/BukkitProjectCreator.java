@@ -4,9 +4,12 @@ import com.intellij.openapi.module.Module;
 import com.intellij.openapi.progress.ProgressIndicator;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.imanity.framework.intellij.ImanityFrameworkIntelliJ;
 import org.imanity.framework.intellij.modules.FrameworkProjectSystem;
 import org.imanity.framework.intellij.modules.creator.step.*;
+import org.imanity.framework.intellij.modules.exception.ModuleBuilderException;
 import org.imanity.framework.intellij.modules.template.BukkitTemplate;
+import org.imanity.framework.intellij.util.GradleFiles;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -35,6 +38,41 @@ public abstract class BukkitProjectCreator extends BaseProjectCreator {
         return new BukkitDependenciesStep(this.getProjectSystem(), mcVersion);
     }
 
+    public static class BukkitGradleCreator extends BukkitProjectCreator {
+
+        public BukkitGradleCreator(Path directory, Module module, FrameworkProjectSystem projectSystem) {
+            super(directory, module, projectSystem);
+        }
+
+        @Override
+        public List<CreatorStep> singleModule() {
+            try {
+                final String buildGradle = BukkitTemplate.INSTANCE.applyBuildGradle(this.getProject(), this.getProjectSystem());
+                final String gradleProperties = BukkitTemplate.INSTANCE.applyGradleProperties(this.getProject());
+                final String settingsGradle = BukkitTemplate.INSTANCE.applySettingsGradle(this.getProject(), this.getProjectSystem());
+
+                GradleFiles<String> gradleFiles = new GradleFiles<>(buildGradle, gradleProperties, settingsGradle);
+
+                return Arrays.asList(
+                        this.createDependenciesStep(),
+                        new CreateDirectoriesStep(this.getProjectSystem(), this.getDirectory()),
+                        new BasicGradleSetupStep(this.getProject(), this.getDirectory(), this.getProjectSystem(), gradleFiles),
+                        this.createMainClassStep(),
+                        new GradleWrapperStep(this.getProject(), this.getDirectory(), this.getProjectSystem()),
+                        new GitIgnoreStep(this.getProject(), this.getDirectory(), FrameworkProjectSystem.ProjectType.GRADLE),
+                        new BasicGradleFinializerStep(this.getModule(), this.getDirectory(), this.getProjectSystem())
+                );
+            } catch (IOException e) {
+                throw new ModuleBuilderException("An error occurs while creating Single Module step for Bukkit Gradle", e);
+            }
+        }
+
+        @Override
+        public List<CreatorStep> multipleModules() {
+            return null;
+        }
+    }
+
     public static class BukkitMavenCreator extends BukkitProjectCreator {
 
         public BukkitMavenCreator(Path directory, Module module, FrameworkProjectSystem projectSystem) {
@@ -61,7 +99,7 @@ public abstract class BukkitProjectCreator extends BaseProjectCreator {
                         this.createMainClassStep(),
 
                         // Setup .gitignore
-                        new MavenGitIgnoreStep(this.getProject(), this.getDirectory()),
+                        new GitIgnoreStep(this.getProject(), this.getDirectory(), FrameworkProjectSystem.ProjectType.MAVEN),
 
                         // Let IntelliJ know the project is maven
                         new BasicMavenFinalizerStep(this.getModule(), this.getDirectory())
@@ -112,7 +150,7 @@ public abstract class BukkitProjectCreator extends BaseProjectCreator {
                     new FrameworkProjectSystem.BuildDependency(
                             "org.imanity.framework",
                             "bukkit-core",
-                            "0.3b2", // TODO - Fetch latest version
+                            ImanityFrameworkIntelliJ.getLatestFrameworkVersion(),
                             "provided",
                             "compileOnly"
                     )

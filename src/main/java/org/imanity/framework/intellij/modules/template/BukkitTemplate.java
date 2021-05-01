@@ -16,7 +16,10 @@ public class BukkitTemplate extends BaseTemplate {
     public static final BukkitTemplate INSTANCE = new BukkitTemplate();
 
     public static final String BUKKIT_MAIN_CLASS_TEMPLATE = "Bukkit Main Class.java",
-            BUKKIT_POM_TEMPLATE = "Bukkit pom.xml";
+            BUKKIT_POM_TEMPLATE = "Bukkit pom.xml",
+            BUKKIT_BUILD_GRADLE_TEMPLATE = "Bukkit build.gradle",
+            BUKKIT_GRADLE_PROPERTIES_TEMPLATE = "Bukkit gradle.properties",
+            BUKKIT_SETTINGS_GRADLE_TEMPLATE = "Bukkit settings.gradle";
 
     public String applyMainClass(Project project, String packageName, String className, FrameworkProjectSystem projectSystem) throws IOException {
         final ImmutableMap.Builder<String, String> builder = ImmutableMap.builder();
@@ -95,6 +98,25 @@ public class BukkitTemplate extends BaseTemplate {
 
     public String applyPom(Project project) throws IOException {
         return this.applyTemplate(project, BUKKIT_POM_TEMPLATE, this.readMavenVersions());
+    }
+
+    public String applyGradleProperties(Project project) throws IOException {
+        return this.applyTemplate(project, BUKKIT_GRADLE_PROPERTIES_TEMPLATE);
+    }
+
+    public String applySettingsGradle(Project project, FrameworkProjectSystem projectSystem) throws IOException {
+        Map<String, String> properties = ImmutableMap.of("ARTIFACT_ID", projectSystem.getArtifactId());
+
+        return this.applyTemplate(project, BUKKIT_SETTINGS_GRADLE_TEMPLATE, properties);
+    }
+
+    public String applyBuildGradle(Project project, FrameworkProjectSystem projectSystem) throws IOException {
+        Map<String, String> map = ImmutableMap.of(
+                "GROUP_ID", projectSystem.getGroupId(),
+                "VERSION", projectSystem.getArtifactId()
+        );
+
+        return this.applyTemplate(project, BUKKIT_BUILD_GRADLE_TEMPLATE, map);
     }
 
     private Map<String, String> readMavenVersions() {

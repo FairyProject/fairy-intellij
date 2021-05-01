@@ -1,5 +1,6 @@
 package org.imanity.framework.intellij.modules;
 
+import com.google.common.collect.ImmutableSet;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.progress.ProgressIndicator;
 import com.intellij.openapi.progress.ProgressManager;
@@ -128,7 +129,13 @@ public class FrameworkProjectSystem {
 
     private ProjectCreator buildCreator(Path path, Module module) {
         // TODO, now only Bukkit + Maven
-        return new BukkitProjectCreator.BukkitMavenCreator(path, module, this);
+        switch (this.projectType) {
+            case MAVEN:
+                return new BukkitProjectCreator.BukkitMavenCreator(path, module, this);
+            case GRADLE:
+                return new BukkitProjectCreator.BukkitGradleCreator(path, module, this);
+        }
+        return null;
     }
 
     private WorkLogStep newLog(Object object, List<WorkLogStep> steps) {
@@ -207,11 +214,30 @@ public class FrameworkProjectSystem {
     }
 
     @Data
-    @AllArgsConstructor
     public static class BuildDependency {
         private String groupId, artifactId, version;
         @Nullable
         private String mavenScope, gradleConfiguration;
+
+        private Set<ProjectType> types;
+
+        public BuildDependency(String groupId, String artifactId, String version, @Nullable String mavenScope, @Nullable String gradleConfiguration) {
+            this.groupId = groupId;
+            this.artifactId = artifactId;
+            this.version = version;
+            this.mavenScope = mavenScope;
+            this.gradleConfiguration = gradleConfiguration;
+            this.types = ImmutableSet.copyOf(ProjectType.values());
+        }
+
+        public BuildDependency(String groupId, String artifactId, String version, @Nullable String mavenScope, @Nullable String gradleConfiguration, ProjectType... types) {
+            this.groupId = groupId;
+            this.artifactId = artifactId;
+            this.version = version;
+            this.mavenScope = mavenScope;
+            this.gradleConfiguration = gradleConfiguration;
+            this.types = ImmutableSet.copyOf(types);
+        }
     }
 
     @Data

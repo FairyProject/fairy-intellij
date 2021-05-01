@@ -28,10 +28,17 @@ version = properties("pluginVersion")
 // Configure project's dependencies
 repositories {
     mavenCentral()
+    mavenLocal()
     jcenter()
 }
 dependencies {
     detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.16.0")
+
+    // Maven Repository Lookup
+    implementation("org.eclipse.aether:aether-impl:1.1.0")
+    implementation("org.eclipse.aether:aether-connector-basic:1.1.0")
+    implementation("org.eclipse.aether:aether-transport-file:1.1.0")
+    implementation("org.apache.maven:maven-aether-provider:3.3.9")
 
     // Lombok
     compileOnly("org.projectlombok:lombok:1.18.20")

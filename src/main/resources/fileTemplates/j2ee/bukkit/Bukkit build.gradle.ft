@@ -1,17 +1,36 @@
 import org.apache.tools.ant.filters.ReplaceTokens
 
-plugins {
-    id 'java'
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath "com.github.sedovalx.gradle:gradle-aspectj-binary:1.0.45"
+    }
 }
+
+apply plugin: 'java'
+apply plugin: 'com.github.sedovalx.gradle-aspectj-binary'
 
 group = '${GROUP_ID}'
 version = '${PLUGIN_VERSION}'
 
-sourceCompatibility = '1.8'
-targetCompatibility = '1.8'
-
 repositories {
     mavenCentral()
+    mavenLocal()
+    maven { url 'https://repo.codemc.io/repository/maven-snapshots/' }
+}
+
+aspectjBinary {
+    applyJavaPlugin = true
+    weaveClasses {
+        ajcSourceSets = [project.sourceSets.main]
+        source = '1.8'
+        target = '1.8'
+        additionalAjcParams = ['-proceedOnError']
+        writeToLog = true
+    }
 }
 
 dependencies {
@@ -21,4 +40,8 @@ processResources {
     from(sourceSets.main.resources.srcDirs) {
         filter ReplaceTokens, tokens: [version: version]
     }
+}
+
+test {
+    useJUnitPlatform()
 }

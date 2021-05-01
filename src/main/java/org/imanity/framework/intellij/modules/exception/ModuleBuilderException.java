@@ -6,7 +6,7 @@ public class ModuleBuilderException extends RuntimeException {
         super(s);
     }
 
-    public ModuleBuilderException(String s, Exception ex) {
+    public ModuleBuilderException(String s, Throwable ex) {
         super(s, ex);
     }
 }

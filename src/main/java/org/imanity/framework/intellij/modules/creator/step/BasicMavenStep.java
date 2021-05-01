@@ -186,6 +186,9 @@ public class BasicMavenStep implements CreatorStep {
             }
 
             for (FrameworkProjectSystem.BuildDependency dependency : step.getProjectSystem().getBuildDependencies()) {
+                if (!dependency.getTypes().contains(FrameworkProjectSystem.ProjectType.MAVEN)) {
+                    continue;
+                }
                 final MavenDomDependency mavenDomDependency = mavenModel.getDependencies().addDependency();
                 mavenDomDependency.getGroupId().setStringValue(dependency.getGroupId());
                 mavenDomDependency.getArtifactId().setStringValue(dependency.getArtifactId());

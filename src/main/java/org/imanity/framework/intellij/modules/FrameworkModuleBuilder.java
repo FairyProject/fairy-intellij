@@ -22,6 +22,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.imanity.framework.intellij.ImanityFrameworkAssets;
 import org.imanity.framework.intellij.modules.wizard.BuildSystemWizardStep;
 import org.imanity.framework.intellij.modules.wizard.BukkitWizardStep;
+import org.imanity.framework.intellij.modules.wizard.ExtraDependencyWizardStep;
 import org.imanity.framework.intellij.modules.wizard.FrameworkTypeWizardStep;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;
@@ -128,7 +129,8 @@ public class FrameworkModuleBuilder extends JavaModuleBuilder {
     public ModuleWizardStep[] createWizardSteps(@NotNull WizardContext wizardContext, @NotNull ModulesProvider modulesProvider) {
         return new ModuleWizardStep[] {
             new BuildSystemWizardStep(this.projectCreator),
-            new BukkitWizardStep(this.projectCreator)
+            new BukkitWizardStep(this.projectCreator),
+            new ExtraDependencyWizardStep(this.projectCreator)
         };
     }
 
