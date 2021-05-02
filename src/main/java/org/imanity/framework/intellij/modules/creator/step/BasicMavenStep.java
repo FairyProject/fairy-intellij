@@ -144,7 +144,7 @@ public class BasicMavenStep implements CreatorStep {
         @Override
         public void apply(BasicMavenStep step, MavenDomProjectModel mavenModel, XmlTag xmlTag) {
             try {
-                step.getProjectSystem().setDirectory(DirectorySet.create(step.getDirectory()));
+                step.getProjectSystem().setDirectory(DirectorySet.createJava(step.getDirectory()));
             } catch (IOException e) {
                 throw new IllegalArgumentException("An error occurs while creating directory", e);
             }

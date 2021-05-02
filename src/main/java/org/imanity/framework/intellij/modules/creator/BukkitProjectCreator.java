@@ -29,13 +29,55 @@ public abstract class BukkitProjectCreator extends BaseProjectCreator {
 
     protected BasicJavaClassStep createMainClassStep() throws IOException {
         return createJavaClassStep(this.getProjectSystem().getMainClass(), (packageName, className) -> {
-            return BukkitTemplate.INSTANCE.applyMainClass(this.getProject(), packageName, className, this.getProjectSystem());
+            return BukkitTemplate.INSTANCE.applyMainClass(this.getProject(), packageName, className, this.getProjectSystem(), false);
         });
     }
 
     protected BukkitDependenciesStep createDependenciesStep() {
         String mcVersion = "1.16.5";
         return new BukkitDependenciesStep(this.getProjectSystem(), mcVersion);
+    }
+
+    public static class BukkitKotlinGradleCreator extends BukkitProjectCreator {
+
+        public BukkitKotlinGradleCreator(Path directory, Module module, FrameworkProjectSystem projectSystem) {
+            super(directory, module, projectSystem);
+        }
+
+        private BasicKotlinClassStep createKotlinMainClassStep() throws IOException {
+            return createKotlinClassStep(this.getProjectSystem().getMainClass(), (packageName, className) -> {
+                return BukkitTemplate.INSTANCE.applyMainClass(this.getProject(), packageName, className, this.getProjectSystem(), true);
+            });
+        }
+
+        @Override
+        public List<CreatorStep> singleModule() {
+            try {
+                final String buildGradle = BukkitTemplate.INSTANCE.applyBuildGradleKts(this.getProject(), this.getProjectSystem());
+                final String gradleProperties = BukkitTemplate.INSTANCE.applyGradleProperties(this.getProject());
+                final String settingsGradle = BukkitTemplate.INSTANCE.applySettingsGradleKts(this.getProject(), this.getProjectSystem());
+
+                GradleFiles<String> gradleFiles = new GradleFiles<>(buildGradle, gradleProperties, settingsGradle);
+
+                return Arrays.asList(
+                        this.createDependenciesStep(),
+                        new KotlinDependenciesStep(this.getProjectSystem()),
+                        new CreateDirectoriesStep(this.getProjectSystem(), this.getDirectory(), true),
+                        new KotlinGradleSetupStep(this.getProject(), this.getDirectory(), this.getProjectSystem(), gradleFiles),
+                        this.createKotlinMainClassStep(),
+                        new GradleWrapperStep(this.getProject(), this.getDirectory(), this.getProjectSystem()),
+                        new GitIgnoreStep(this.getProject(), this.getDirectory(), FrameworkProjectSystem.ProjectType.GRADLE),
+                        new BasicGradleFinializerStep(this.getModule(), this.getDirectory(), this.getProjectSystem())
+                );
+            } catch (IOException e) {
+                throw new ModuleBuilderException("An error occurs while creating Single Module step for Bukkit Gradle", e);
+            }
+        }
+
+        @Override
+        public List<CreatorStep> multipleModules() {
+            return null;
+        }
     }
 
     public static class BukkitGradleCreator extends BukkitProjectCreator {
@@ -55,8 +97,8 @@ public abstract class BukkitProjectCreator extends BaseProjectCreator {
 
                 return Arrays.asList(
                         this.createDependenciesStep(),
-                        new CreateDirectoriesStep(this.getProjectSystem(), this.getDirectory()),
-                        new BasicGradleSetupStep(this.getProject(), this.getDirectory(), this.getProjectSystem(), gradleFiles),
+                        new CreateDirectoriesStep(this.getProjectSystem(), this.getDirectory(), false),
+                        new GroovyGradleSetupStep(this.getProject(), this.getDirectory(), this.getProjectSystem(), gradleFiles),
                         this.createMainClassStep(),
                         new GradleWrapperStep(this.getProject(), this.getDirectory(), this.getProjectSystem()),
                         new GitIgnoreStep(this.getProject(), this.getDirectory(), FrameworkProjectSystem.ProjectType.GRADLE),
@@ -123,6 +165,16 @@ public abstract class BukkitProjectCreator extends BaseProjectCreator {
 
         @Override
         public void run(ProgressIndicator indicator) {
+            this.projectSystem.getBuildRepositories().add(FrameworkProjectSystem.MAVEN_CENTRAL);
+            this.projectSystem.getBuildRepositories().add(FrameworkProjectSystem.MAVEN_LOCAL);
+            this.projectSystem.getBuildRepositories().add(new FrameworkProjectSystem.BuildRepository(
+                    "codemc-repo",
+                    "https://repo.codemc.io/repository/maven-snapshots/",
+
+                    FrameworkProjectSystem.ProjectType.GRADLE,
+                    FrameworkProjectSystem.ProjectType.KOTLIN_GRADLE
+            ));
+
             this.projectSystem.getBuildRepositories().add(
                     new FrameworkProjectSystem.BuildRepository(
                             "papermc-repo",
@@ -153,6 +205,19 @@ public abstract class BukkitProjectCreator extends BaseProjectCreator {
                             ImanityFrameworkIntelliJ.getLatestFrameworkVersion(),
                             "provided",
                             "compileOnly"
+                    )
+            );
+            this.projectSystem.getBuildDependencies().add(
+                    new FrameworkProjectSystem.BuildDependency(
+                            "org.imanity.framework",
+                            "annotationProcessor",
+                            ImanityFrameworkIntelliJ.getLatestFrameworkAnnotationProcessorVersion(),
+                            "none",
+                            "annotationProcessor",
+                            "kapt",
+
+                            FrameworkProjectSystem.ProjectType.GRADLE,
+                            FrameworkProjectSystem.ProjectType.KOTLIN_GRADLE
                     )
             );
         }

@@ -2,18 +2,16 @@ package org.imanity.framework.intellij.inspection;
 
 import com.intellij.codeInspection.util.InspectionMessage;
 import com.intellij.psi.PsiField;
-import com.intellij.psi.PsiMethod;
 import com.siyeh.ig.BaseInspection;
 import com.siyeh.ig.BaseInspectionVisitor;
 import org.imanity.framework.intellij.ImanityFrameworkIntelliJ;
 import org.imanity.framework.intellij.constant.ClassConstants;
-import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;
 
 public class AutowiredBeanInspection extends BaseInspection {
 
     @Override
-    public @Nls(capitalization = Nls.Capitalization.Sentence) @NotNull String getDisplayName() {
+    public @NotNull String getDisplayName() {
         return "Autowired target is not a bean.";
     }
 

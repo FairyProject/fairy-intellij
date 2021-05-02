@@ -24,8 +24,9 @@ public class FieldMayBeFinalSuppressor implements InspectionSuppressor {
         return clazz.hasAnnotation(ClassConstants.ENTITY_CLASS);
     }
 
+    @NotNull
     @Override
-    public SuppressQuickFix @NotNull [] getSuppressActions(@Nullable PsiElement element, @NotNull String toolId) {
+    public SuppressQuickFix[] getSuppressActions(@Nullable PsiElement element, @NotNull String toolId) {
         return new SuppressQuickFix[0];
     }
 }

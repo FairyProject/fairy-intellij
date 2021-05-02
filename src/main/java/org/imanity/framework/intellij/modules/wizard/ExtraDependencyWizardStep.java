@@ -39,6 +39,7 @@ public class ExtraDependencyWizardStep extends ModuleWizardStep {
                     "1.18.20",
                     "none",
                     "annotationProcessor",
+                    "kapt",
                     FrameworkProjectSystem.ProjectType.GRADLE, FrameworkProjectSystem.ProjectType.KOTLIN_GRADLE
             ));
         }

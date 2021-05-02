@@ -56,4 +56,14 @@ public class PsiUtil {
         PsiDocumentManager.getInstance(file.getProject()).doPostponedOperationsAndUnblockDocument(document);
     }
 
+    public <T extends PsiElement> T getPsiChildrenByType(PsiElement parent, Class<T> type) {
+        for (PsiElement child : parent.getChildren()) {
+            if (type.isInstance(child)) {
+                return type.cast(child);
+            }
+        }
+
+        return null;
+    }
+
 }

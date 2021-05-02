@@ -1,0 +1,47 @@
+package ${PACKAGE}
+
+import org.imanity.framework.ClasspathScan
+import org.imanity.framework.bukkit.plugin.BukkitPlugin
+import org.imanity.framework.plugin.Plugin
+import org.imanity.framework.plugin.PluginLoadOrder
+import org.imanity.framework.plugin.PluginType
+#if (${DEPEND})
+import org.imanity.framework.plugin.PluginDependency
+#end
+
+@Plugin(
+        name = "${NAME}",
+        version = "${VERSION}",
+        description = "${DESCRIPTION}",
+        load = PluginLoadOrder.${LOAD_ORDER},
+        #if (${AUTHOR})
+        authors = {${AUTHOR}},
+        #end
+#if (${DEPEND})
+        depends = {${DEPEND}},
+        #end
+#if (${LOAD_BEFORE})
+        loadBefore = {${LOAD_BEFORE}},
+        #end
+        type = PluginType.BUKKIT
+)
+@ClasspathScan("${PACKAGE}.${CLASS_NAME}") // Replace it with your package name
+class ${CLASS_NAME} : BukkitPlugin() {
+
+    override fun onPreEnable() {
+        // Before Imanity Framework initalize this plugin
+    }
+
+    override fun onPluginEnable() {
+        // After Imanity Framework initalize to this plugin
+    }
+
+    override fun onPluginDisable() {
+        // Plugin shutdown, and Before Imanity Framework shut down
+    }
+
+    override fun onFrameworkFullyDisable() {
+        // After Imanity Framework fully shut down
+    }
+
+}

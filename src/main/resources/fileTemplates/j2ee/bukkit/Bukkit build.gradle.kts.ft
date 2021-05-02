@@ -1,0 +1,39 @@
+import com.github.sedovalx.gradle.aspectj.WeaveClassesExtension
+
+plugins {
+    kotlin("jvm")
+    kotlin("kapt")
+    id("com.github.sedovalx.gradle-aspectj-binary")
+}
+
+group = "${GROUP_ID}"
+version = "${VERSION}"
+
+kapt {
+    includeCompileClasspath = false
+}
+
+repositories {
+}
+
+aspectjBinary {
+    applyJavaPlugin = true
+
+    weaveClasses(delegateClosureOf<WeaveClassesExtension> {
+        ajcSourceSets = setOf(project.sourceSets.main.get())
+        outputDir = project.file(project.buildDir.path + "/classes/kotlin/main")
+        source = "1.7"
+        target = "1.7"
+        additionalAjcParams = listOf("-proceedOnError")
+        writeToLog = true
+    })
+}
+
+dependencies {
+}
+
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class).all {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}

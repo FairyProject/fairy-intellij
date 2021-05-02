@@ -15,10 +15,16 @@ public class CreateDirectoriesStep implements CreatorStep {
     private final FrameworkProjectSystem projectSystem;
     private final Path directory;
 
+    private final boolean kotlin;
+
     @Override
     public void run(ProgressIndicator indicator) {
         try {
-            this.projectSystem.setDirectory(DirectorySet.create(this.directory));
+            if (kotlin) {
+                this.projectSystem.setDirectory(DirectorySet.createKotlin(this.directory));
+                return;
+            }
+            this.projectSystem.setDirectory(DirectorySet.createJava(this.directory));
         } catch (IOException e) {
             throw new ModuleBuilderException("An error occurs while setting directory for project creation", e);
         }

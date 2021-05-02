@@ -1,0 +1,11 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath("com.github.sedovalx.gradle:gradle-aspectj-binary:1.0.45")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.32")
+    }
+}
+
+rootProject.name = "${ARTIFACT_ID}"

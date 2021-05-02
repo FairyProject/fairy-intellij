@@ -9,7 +9,7 @@ import org.imanity.framework.intellij.constant.ClassConstants;
 @UtilityClass
 public class ImanityFrameworkIntelliJ {
 
-    public static final String DEFAULT_WRAPPER_VERSION = "5.6.1";
+    public static final String DEFAULT_WRAPPER_VERSION = "6.7";
 
     public boolean isBean(PsiType type) {
         final PsiClass psiClass = PsiTypesUtil.getPsiClass(type);
@@ -22,6 +22,11 @@ public class ImanityFrameworkIntelliJ {
     public String getLatestFrameworkVersion() {
         // TODO - Cloud fetch
         return "0.3b2";
+    }
+
+    public String getLatestFrameworkAnnotationProcessorVersion() {
+        // TODO - Cloud fetch
+        return "0.1-SNAPSHOT";
     }
 
 }

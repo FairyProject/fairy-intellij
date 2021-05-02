@@ -10,7 +10,6 @@ import com.siyeh.ig.BaseInspection;
 import com.siyeh.ig.BaseInspectionVisitor;
 import com.siyeh.ig.InspectionGadgetsFix;
 import org.imanity.framework.intellij.constant.ClassConstants;
-import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -19,7 +18,7 @@ import java.util.regex.Pattern;
 public class SerializableConstructorInspection extends BaseInspection {
 
     @Override
-    public @Nls(capitalization = Nls.Capitalization.Sentence) @NotNull String getDisplayName() {
+    public @NotNull String getDisplayName() {
         return "@Entity Class doesn't have no args constructor";
     }
 

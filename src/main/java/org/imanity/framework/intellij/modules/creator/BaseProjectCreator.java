@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.tuple.Pair;
 import org.imanity.framework.intellij.modules.FrameworkProjectSystem;
 import org.imanity.framework.intellij.modules.creator.step.BasicJavaClassStep;
+import org.imanity.framework.intellij.modules.creator.step.BasicKotlinClassStep;
 import org.imanity.framework.intellij.util.ClassContentMapper;
 
 import java.io.IOException;
@@ -29,6 +30,15 @@ public abstract class BaseProjectCreator implements ProjectCreator {
 
         final String content = contentMapper.apply(packageName, className);
         return new BasicJavaClassStep(this.getProject(), this.projectSystem, fullClassName, content);
+    }
+
+    protected BasicKotlinClassStep createKotlinClassStep(String fullClassName, ClassContentMapper contentMapper) throws IOException {
+        final Pair<String, String> pair = this.splitPackage(fullClassName);
+        String packageName = pair.getKey();
+        String className = pair.getValue();
+
+        final String content = contentMapper.apply(packageName, className);
+        return new BasicKotlinClassStep(this.getProject(), this.projectSystem, fullClassName, content);
     }
 
     protected Pair<String, String> splitPackage(String fullClassName) {

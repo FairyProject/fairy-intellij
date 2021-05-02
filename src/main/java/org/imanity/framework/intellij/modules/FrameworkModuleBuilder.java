@@ -58,7 +58,7 @@ public class FrameworkModuleBuilder extends JavaModuleBuilder {
     }
 
     @Override
-    public @Nls(capitalization = Nls.Capitalization.Title) String getPresentableName() {
+    public String getPresentableName() {
         return "Imanity Framework";
     }
 

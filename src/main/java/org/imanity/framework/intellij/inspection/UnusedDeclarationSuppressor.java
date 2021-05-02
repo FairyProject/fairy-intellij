@@ -24,8 +24,9 @@ public class UnusedDeclarationSuppressor implements InspectionSuppressor {
         return field.hasAnnotation(ClassConstants.AUTOWIRED_CLASS);
     }
 
+    @NotNull
     @Override
-    public SuppressQuickFix @NotNull [] getSuppressActions(@Nullable PsiElement element, @NotNull String toolId) {
+    public SuppressQuickFix[] getSuppressActions(@Nullable PsiElement element, @NotNull String toolId) {
         return SuppressQuickFix.EMPTY_ARRAY;
     }
 }

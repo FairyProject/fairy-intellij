@@ -14,12 +14,9 @@ apply plugin: 'java'
 apply plugin: 'com.github.sedovalx.gradle-aspectj-binary'
 
 group = '${GROUP_ID}'
-version = '${PLUGIN_VERSION}'
+version = '${VERSION}'
 
 repositories {
-    mavenCentral()
-    mavenLocal()
-    maven { url 'https://repo.codemc.io/repository/maven-snapshots/' }
 }
 
 aspectjBinary {

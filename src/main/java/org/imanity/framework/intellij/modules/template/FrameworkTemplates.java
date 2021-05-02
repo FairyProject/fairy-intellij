@@ -12,10 +12,12 @@ public class FrameworkTemplates implements FileTemplateGroupDescriptorFactory {
 
         final FileTemplateGroupDescriptor bukkitGroup = new FileTemplateGroupDescriptor("Bukkit", ImanityFrameworkAssets.SPIGOT_LOGO);
         bukkitGroup.addTemplate(new FileTemplateDescriptor(BukkitTemplate.BUKKIT_MAIN_CLASS_TEMPLATE));
+        bukkitGroup.addTemplate(new FileTemplateDescriptor(BukkitTemplate.BUKKIT_MAIN_CLASS_KOTLIN_TEMPLATE));
         bukkitGroup.addTemplate(new FileTemplateDescriptor(BukkitTemplate.BUKKIT_POM_TEMPLATE));
         bukkitGroup.addTemplate(new FileTemplateDescriptor(BukkitTemplate.BUKKIT_BUILD_GRADLE_TEMPLATE));
         bukkitGroup.addTemplate(new FileTemplateDescriptor(BukkitTemplate.BUKKIT_GRADLE_PROPERTIES_TEMPLATE));
         bukkitGroup.addTemplate(new FileTemplateDescriptor(BukkitTemplate.BUKKIT_SETTINGS_GRADLE_TEMPLATE));
+        bukkitGroup.addTemplate(new FileTemplateDescriptor(BukkitTemplate.BUKKIT_BUILD_GRADLE_KTS_TEMPLATE));
         group.addTemplate(bukkitGroup);
 
         final FileTemplateGroupDescriptor commonGroup = new FileTemplateGroupDescriptor("Common", ImanityFrameworkAssets.FRAMEWORK_LOGO);

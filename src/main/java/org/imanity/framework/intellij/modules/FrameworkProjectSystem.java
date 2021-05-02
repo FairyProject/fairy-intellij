@@ -134,6 +134,8 @@ public class FrameworkProjectSystem {
                 return new BukkitProjectCreator.BukkitMavenCreator(path, module, this);
             case GRADLE:
                 return new BukkitProjectCreator.BukkitGradleCreator(path, module, this);
+            case KOTLIN_GRADLE:
+                return new BukkitProjectCreator.BukkitKotlinGradleCreator(path, module, this);
         }
         return null;
     }
@@ -217,34 +219,81 @@ public class FrameworkProjectSystem {
     public static class BuildDependency {
         private String groupId, artifactId, version;
         @Nullable
-        private String mavenScope, gradleConfiguration;
+        private String mavenScope, gradleScope, kotlinDslScope;
 
         private Set<ProjectType> types;
 
-        public BuildDependency(String groupId, String artifactId, String version, @Nullable String mavenScope, @Nullable String gradleConfiguration) {
+        public BuildDependency(String groupId, String artifactId, String version, @Nullable String mavenScope, @Nullable String gradleScope) {
+            this(groupId, artifactId, version, mavenScope, gradleScope, gradleScope);
+        }
+
+        public BuildDependency(String groupId, String artifactId, String version, @Nullable String mavenScope, @Nullable String gradleScope, ProjectType... types) {
+            this(groupId, artifactId, version, mavenScope, gradleScope, gradleScope, types);
+        }
+
+        public BuildDependency(String groupId, String artifactId, String version, @Nullable String mavenScope, @Nullable String gradleScope, @Nullable String kotlinDslScope) {
             this.groupId = groupId;
             this.artifactId = artifactId;
             this.version = version;
             this.mavenScope = mavenScope;
-            this.gradleConfiguration = gradleConfiguration;
+            this.gradleScope = gradleScope;
             this.types = ImmutableSet.copyOf(ProjectType.values());
         }
 
-        public BuildDependency(String groupId, String artifactId, String version, @Nullable String mavenScope, @Nullable String gradleConfiguration, ProjectType... types) {
+        public BuildDependency(String groupId, String artifactId, String version, @Nullable String mavenScope, @Nullable String gradleScope, @Nullable String kotlinDslScope, ProjectType... types) {
             this.groupId = groupId;
             this.artifactId = artifactId;
             this.version = version;
             this.mavenScope = mavenScope;
-            this.gradleConfiguration = gradleConfiguration;
+            this.gradleScope = gradleScope;
             this.types = ImmutableSet.copyOf(types);
         }
     }
 
+    public static final BuildRepository MAVEN_CENTRAL = new BuildRepository("", "",
+            FrameworkProjectSystem.ProjectType.GRADLE,
+            FrameworkProjectSystem.ProjectType.KOTLIN_GRADLE);
+    public static final BuildRepository MAVEN_LOCAL = new BuildRepository("", "",
+            FrameworkProjectSystem.ProjectType.GRADLE,
+            FrameworkProjectSystem.ProjectType.KOTLIN_GRADLE);
+
     @Data
-    @AllArgsConstructor
     public static class BuildRepository {
         private String id;
         private String url;
+        private Set<ProjectType> types;
+
+        public BuildRepository(String id, String url) {
+            this.id = id;
+            this.url = url;
+            this.types = ImmutableSet.copyOf(ProjectType.values());
+        }
+
+        public BuildRepository(String id, String url, ProjectType... types) {
+            this.id = id;
+            this.url = url;
+            this.types = ImmutableSet.copyOf(types);
+        }
+
+        public String toGradleString(boolean kotlin) {
+            if (kotlin) {
+                // Kotlin
+                if (this == MAVEN_CENTRAL) {
+                    return "mavenCentral()";
+                } else if (this == MAVEN_LOCAL) {
+                    return "mavenLocal()";
+                }
+                return "maven( url = \"" + this.getUrl() + "\" )";
+            } else {
+                // Groovy
+                if (this == MAVEN_CENTRAL) {
+                    return "mavenCentral()";
+                } else if (this == MAVEN_LOCAL) {
+                    return "mavenLocal()";
+                }
+                return "maven { url = '" + this.getUrl() + "' }";
+            }
+        }
     }
 
 }

@@ -61,6 +61,7 @@ intellij {
     setPlugins(
         "java",
         "maven",
+        "Kotlin",
         "gradle",
         "Groovy",
         // needed dependencies for unit tests
