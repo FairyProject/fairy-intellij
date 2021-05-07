@@ -13,7 +13,7 @@
     <depends>org.intellij.groovy</depends>
 
     <description><![CDATA[
-      Imanity Framework IntelliJ Integration provides better experience while using Imanity Framework by more inspection checks to prevent mistakes happens
+      ImanityFramework Integration provides better experience while using ImanityFramework by more inspection checks to prevent mistakes happens, And an automated ImanityFramework Project Creation UI for you to create Project easily!
     ]]></description>
 
     <extensions defaultExtensionNs="com.intellij">

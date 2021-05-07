@@ -4,6 +4,10 @@
 
 ## [Unreleased]
 
+## [0.2.1]
+### Fixed
+- Fixed Maven Project Creation issue
+
 ## [0.2.0]
 ### Added
 - Added Project Creation For Bukkit Maven, Gradle And Kotlin Gradle

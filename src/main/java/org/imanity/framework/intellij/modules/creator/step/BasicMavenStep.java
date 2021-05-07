@@ -180,6 +180,9 @@ public class BasicMavenStep implements CreatorStep {
         @Override
         public void apply(BasicMavenStep step, MavenDomProjectModel mavenModel, XmlTag xmlTag) {
             for (FrameworkProjectSystem.BuildRepository repository : step.getProjectSystem().getBuildRepositories()) {
+                if (!repository.getTypes().contains(FrameworkProjectSystem.ProjectType.MAVEN)) {
+                    continue;
+                }
                 final MavenDomRepository mavenDomRepository = mavenModel.getRepositories().addRepository();
                 mavenDomRepository.getId().setStringValue(repository.getId());
                 mavenDomRepository.getUrl().setStringValue(repository.getUrl());
