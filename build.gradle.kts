@@ -32,7 +32,7 @@ repositories {
     jcenter()
 }
 dependencies {
-    detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.16.0")
+    detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.17.1")
 
     // Maven Repository Lookup
     implementation("org.eclipse.aether:aether-impl:1.1.0")
