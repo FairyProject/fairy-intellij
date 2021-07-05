@@ -8,7 +8,7 @@
 ### Added
 - Added Suppressor for Configuration
 
-### Updated
+### Changed
 - Updated IntelliJ plugin
 - Updated to Fairy 0.4b1
 
