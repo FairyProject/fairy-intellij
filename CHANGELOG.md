@@ -1,8 +1,16 @@
 <!-- Keep a Changelog guide -> https://keepachangelog.com -->
 
-# ImanityFramework-IntelliJ-Plugin Changelog
+# Fairy-IntelliJ-Plugin Changelog
 
 ## [Unreleased]
+
+## [0.2.3]
+### Fixed
+- Fixed Description
+
+## [0.2.2]
+### Fixed
+- Fixed Naming
 
 ## [0.2.1]
 ### Fixed

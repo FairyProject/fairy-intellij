@@ -1,7 +1,7 @@
-# Imanity Framework IntelliJ Integration
+# Fairy IntelliJ Integration
 
 <!-- Plugin description -->
 
-Imanity Framework IntelliJ Integration provides better experience while using Imanity Framework by more inspection checks to prevent mistakes happens
+Fairy Integration provides better experience while using Fairy by more inspection checks to prevent mistakes happens, And there is an automated Fairy Project Creation UI for you to create Project easily!
 
 <!-- Plugin description end -->

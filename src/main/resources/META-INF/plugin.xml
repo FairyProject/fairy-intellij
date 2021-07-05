@@ -1,6 +1,6 @@
 <idea-plugin>
-    <id>org.imanity.framework.intellij</id>
-    <name>ImanityFramework Integration</name>
+    <id>org.fairy.intellij</id>
+    <name>Fairy Integration</name>
     <vendor>Imanity Software</vendor>
 
     <!-- Product and plugin compatibility requirements -->
@@ -13,19 +13,20 @@
     <depends>org.intellij.groovy</depends>
 
     <description><![CDATA[
-      ImanityFramework Integration provides better experience while using ImanityFramework by more inspection checks to prevent mistakes happens, And an automated ImanityFramework Project Creation UI for you to create Project easily!
+      Fairy Integration provides better experience while using Fairy by more inspection checks to prevent mistakes happens, And an automated Fairy Project Creation UI for you to create Project easily!
     ]]></description>
 
     <extensions defaultExtensionNs="com.intellij">
-        <moduleType id="IMANITY_MODULE_TYPE" implementationClass="org.imanity.framework.intellij.modules.FrameworkModuleType"/>
-        <moduleBuilder id="IMANITY_MODULE" builderClass="org.imanity.framework.intellij.modules.FrameworkModuleBuilder"/>
+        <moduleType id="IMANITY_MODULE_TYPE" implementationClass="org.fairy.intellij.modules.FairyModuleType"/>
+        <moduleBuilder id="IMANITY_MODULE" builderClass="org.fairy.intellij.modules.FairyModuleBuilder"/>
 
         <!-- File templates are for project creations -->
-        <fileTemplateGroup implementation="org.imanity.framework.intellij.modules.template.FrameworkTemplates"/>
+        <fileTemplateGroup implementation="org.fairy.intellij.modules.template.FrameworkTemplates"/>
 
         <!-- Project-independent Inspection Suppressors -->
-        <lang.inspectionSuppressor language="JAVA" implementationClass="org.imanity.framework.intellij.inspection.UnusedDeclarationSuppressor"/>
-        <lang.inspectionSuppressor language="JAVA" implementationClass="org.imanity.framework.intellij.inspection.FieldMayBeFinalSuppressor"/>
+        <lang.inspectionSuppressor language="JAVA" implementationClass="org.fairy.intellij.inspection.UnusedDeclarationSuppressor"/>
+        <lang.inspectionSuppressor language="JAVA" implementationClass="org.fairy.intellij.inspection.FieldMayBeFinalSuppressor"/>
+        <lang.inspectionSuppressor language="JAVA" implementationClass="org.fairy.intellij.inspection.FieldCanBeLocalSuppressor"/>
 
         <localInspection displayName="Autowired target is not a bean."
                          groupName="AutowiredBean"
@@ -33,14 +34,14 @@
                          enabledByDefault="true"
                          level="ERROR"
                          hasStaticDescription="true"
-                         implementationClass="org.imanity.framework.intellij.inspection.AutowiredBeanInspection"/>
+                         implementationClass="org.fairy.intellij.inspection.AutowiredBeanInspection"/>
         <localInspection displayName="@Entity Class doesn't have no args constructor"
                          groupName="SerializableConstructor"
                          language="JAVA"
                          enabledByDefault="true"
                          level="ERROR"
                          hasStaticDescription="true"
-                         implementationClass="org.imanity.framework.intellij.inspection.SerializableConstructorInspection"/>
+                         implementationClass="org.fairy.intellij.inspection.SerializableConstructorInspection"/>
 
     </extensions>
 </idea-plugin>

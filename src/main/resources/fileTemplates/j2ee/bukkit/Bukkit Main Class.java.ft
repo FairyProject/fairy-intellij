@@ -1,12 +1,12 @@
 package ${PACKAGE};
 
-import org.imanity.framework.ClasspathScan;
-import org.imanity.framework.bukkit.plugin.BukkitPlugin;
-import org.imanity.framework.plugin.Plugin;
-import org.imanity.framework.plugin.PluginLoadOrder;
-import org.imanity.framework.plugin.PluginType;
+import org.fairy.bean.ClasspathScan;
+import org.fairy.bukkit.plugin.BukkitPlugin;
+import org.fairy.plugin.Plugin;
+import org.fairy.plugin.PluginLoadOrder;
+import org.fairy.plugin.PluginType;
 #if (${DEPEND})
-import org.imanity.framework.plugin.PluginDependency;
+import org.fairy.plugin.PluginDependency;
 #end
 
 @Plugin(
@@ -30,22 +30,22 @@ public class ${CLASS_NAME} extends BukkitPlugin {
 
     @Override
     public void onPreEnable() {
-        // Before Imanity Framework initalize this plugin
+        // Before Fairy initalize this plugin
     }
 
     @Override
     public void onPluginEnable() {
-        // After Imanity Framework initalize to this plugin
+        // After Fairy initalize to this plugin
     }
 
     @Override
     public void onPluginDisable() {
-        // Plugin shutdown, and Before Imanity Framework shut down
+        // Plugin shutdown, and Before Fairy shut down
     }
 
     @Override
     public void onFrameworkFullyDisable() {
-        // After Imanity Framework fully shut down
+        // After Fairy fully shut down
     }
 
 }

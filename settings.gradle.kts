@@ -1,1 +1,1 @@
-rootProject.name = "ImanityFramework Integration"
+rootProject.name = "Fairy Integration"
