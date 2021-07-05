@@ -4,6 +4,10 @@
 
 ## [Unreleased]
 
+## [0.3.1]
+### Fixed
+- Fixed Suppressor for @ConfigurationElement
+
 ## [0.3.0]
 ### Added
 - Added Suppressor for Configuration
