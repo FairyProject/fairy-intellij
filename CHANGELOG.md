@@ -4,6 +4,14 @@
 
 ## [Unreleased]
 
+## [0.3]
+### Added
+- Added Suppressor for Configuration
+
+### Updated
+- Updated IntelliJ plugin
+- Updated to Fairy 0.4b1
+
 ## [0.2.3]
 ### Fixed
 - Fixed Description
