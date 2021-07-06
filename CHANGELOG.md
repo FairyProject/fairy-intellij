@@ -4,6 +4,14 @@
 
 ## [Unreleased]
 
+## [0.3.3]
+### Fixed
+- Improved Project lookup
+
+## [0.3.2]
+### Changed
+- Set @Verified annotated and AbstractPlugin as bean classes
+
 ## [0.3.1]
 ### Fixed
 - Fixed Suppressor for @ConfigurationElement

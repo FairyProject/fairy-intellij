@@ -17,9 +17,16 @@ public class FairyIntelliJ {
     public static final String DEFAULT_WRAPPER_VERSION = "7.1";
 
     public boolean isBean(PsiType type) {
-        final Project project = ProjectManager.getInstance().getOpenProjects()[0];
-        final JavaPsiFacade psiFacade = JavaPsiFacade.getInstance(project);
-        final PsiClass abstractPlugin = psiFacade.findClass(ClassConstants.ABSTRACT_PLUGIN_CLASS, GlobalSearchScope.allScope(project));
+        final PsiClass abstractPlugin;
+
+        final ProjectManager projectManager = ProjectManager.getInstanceIfCreated();
+        if (projectManager != null && projectManager.getOpenProjects().length > 0) {
+            Project project = projectManager.getOpenProjects()[0];
+            final JavaPsiFacade psiFacade = JavaPsiFacade.getInstance(project);
+            abstractPlugin = psiFacade.findClass(ClassConstants.ABSTRACT_PLUGIN_CLASS, GlobalSearchScope.allScope(project));
+        }  else {
+            abstractPlugin = null;
+        }
 
         final PsiClass psiClass = PsiTypesUtil.getPsiClass(type);
         if (psiClass == null) {
