@@ -38,12 +38,16 @@ public class FairyIntelliJ {
         }
 
         // check every inherit class for Verified Classes
-        return psiClass.hasAnnotation(ClassConstants.VERIFIED_CLASS) || psiClass.hasAnnotation(ClassConstants.COMPONENT_CLASS) || psiClass.hasAnnotation(ClassConstants.SERVICE_CLASS);
+        return psiClass.hasAnnotation(ClassConstants.VERIFIED_CLASS) ||
+                psiClass.hasAnnotation(ClassConstants.COMPONENT_CLASS) ||
+                psiClass.hasAnnotation(ClassConstants.SERVICE_CLASS) ||
+                psiClass.hasAnnotation(ClassConstants.OPTIONAL_CLASS) ||
+                psiClass.hasAnnotation(ClassConstants.BEAN_HOLDER_CLASS);
     }
 
     public String getLatestFrameworkVersion() {
         // TODO - Cloud fetch
-        return "0.4b2";
+        return "0.4b4";
     }
 
 }
