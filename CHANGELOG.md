@@ -5,7 +5,7 @@
 ## [Unreleased]
 
 ## [0.3.4]
-## Fixed
+### Fixed
 - Fixed Gradle Plugins
 - Improved Bean Detection
 
