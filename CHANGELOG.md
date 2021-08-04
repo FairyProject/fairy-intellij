@@ -4,6 +4,11 @@
 
 ## [Unreleased]
 
+## [0.3.4]
+## Fixed
+- Fixed Gradle Plugins
+- Improved Bean Detection
+
 ## [0.3.3]
 ### Fixed
 - Improved Project lookup
