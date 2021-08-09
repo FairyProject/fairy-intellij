@@ -15,14 +15,14 @@ public class BukkitTemplate extends BaseTemplate {
 
     public static final BukkitTemplate INSTANCE = new BukkitTemplate();
 
-    public static final String BUKKIT_MAIN_CLASS_TEMPLATE = "Bukkit Main Class.java",
-            BUKKIT_MAIN_CLASS_KOTLIN_TEMPLATE = "Bukkit Main Class.kt",
-            BUKKIT_POM_TEMPLATE = "Bukkit pom.xml",
-            BUKKIT_BUILD_GRADLE_TEMPLATE = "Bukkit build.gradle",
-            BUKKIT_GRADLE_PROPERTIES_TEMPLATE = "Bukkit gradle.properties",
-            BUKKIT_SETTINGS_GRADLE_TEMPLATE = "Bukkit settings.gradle",
-            BUKKIT_BUILD_GRADLE_KTS_TEMPLATE = "Bukkit build.gradle.kts",
-            BUKKIT_SETTINGS_GRADLE_KTS_TEMPLATE = "Bukkit settings.gradle.kts";
+    public static final String SPIGOT_MAIN_CLASS_TEMPLATE = "Spigot Main Class.java",
+            SPIGOT_MAIN_CLASS_KOTLIN_TEMPLATE = "Spigot Main Class.kt",
+            SPIGOT_POM_TEMPLATE = "Spigot pom.xml",
+            SPIGOT_BUILD_GRADLE_TEMPLATE = "Spigot build.gradle",
+            SPIGOT_GRADLE_PROPERTIES_TEMPLATE = "Spigot gradle.properties",
+            SPIGOT_SETTINGS_GRADLE_TEMPLATE = "Spigot settings.gradle",
+            SPIGOT_BUILD_GRADLE_KTS_TEMPLATE = "Spigot build.gradle.kts",
+            SPIGOT_SETTINGS_GRADLE_KTS_TEMPLATE = "Spigot settings.gradle.kts";
 
     public String applyMainClass(Project project, String packageName, String className, FairyProjectSystem projectSystem, boolean kotlin) throws IOException {
         final ImmutableMap.Builder<String, String> builder = ImmutableMap.builder();
@@ -97,29 +97,29 @@ public class BukkitTemplate extends BaseTemplate {
         builder.put("LOAD_ORDER", projectSystem.getLoadOrder());
 
         if (kotlin) {
-            return this.applyTemplate(project, BUKKIT_MAIN_CLASS_KOTLIN_TEMPLATE, builder.build());
+            return this.applyTemplate(project, SPIGOT_MAIN_CLASS_KOTLIN_TEMPLATE, builder.build());
         }
-        return this.applyTemplate(project, BUKKIT_MAIN_CLASS_TEMPLATE, builder.build());
+        return this.applyTemplate(project, SPIGOT_MAIN_CLASS_TEMPLATE, builder.build());
     }
 
     public String applyPom(Project project) throws IOException {
-        return this.applyTemplate(project, BUKKIT_POM_TEMPLATE, this.readMavenVersions());
+        return this.applyTemplate(project, SPIGOT_POM_TEMPLATE, this.readMavenVersions());
     }
 
     public String applyGradleProperties(Project project) throws IOException {
-        return this.applyTemplate(project, BUKKIT_GRADLE_PROPERTIES_TEMPLATE);
+        return this.applyTemplate(project, SPIGOT_GRADLE_PROPERTIES_TEMPLATE);
     }
 
     public String applySettingsGradle(Project project, FairyProjectSystem projectSystem) throws IOException {
         Map<String, String> properties = ImmutableMap.of("ARTIFACT_ID", projectSystem.getArtifactId());
 
-        return this.applyTemplate(project, BUKKIT_SETTINGS_GRADLE_TEMPLATE, properties);
+        return this.applyTemplate(project, SPIGOT_SETTINGS_GRADLE_TEMPLATE, properties);
     }
 
     public String applySettingsGradleKts(Project project, FairyProjectSystem projectSystem) throws IOException {
         Map<String, String> properties = ImmutableMap.of("ARTIFACT_ID", projectSystem.getArtifactId());
 
-        return this.applyTemplate(project, BUKKIT_SETTINGS_GRADLE_KTS_TEMPLATE, properties);
+        return this.applyTemplate(project, SPIGOT_SETTINGS_GRADLE_KTS_TEMPLATE, properties);
     }
 
     public String applyBuildGradle(Project project, FairyProjectSystem projectSystem) throws IOException {
@@ -128,7 +128,7 @@ public class BukkitTemplate extends BaseTemplate {
                 "VERSION", projectSystem.getArtifactId()
         );
 
-        return this.applyTemplate(project, BUKKIT_BUILD_GRADLE_TEMPLATE, map);
+        return this.applyTemplate(project, SPIGOT_BUILD_GRADLE_TEMPLATE, map);
     }
 
     public String applyBuildGradleKts(Project project, FairyProjectSystem projectSystem) throws IOException {
@@ -137,7 +137,7 @@ public class BukkitTemplate extends BaseTemplate {
                 "VERSION", projectSystem.getArtifactId()
         );
 
-        return this.applyTemplate(project, BUKKIT_BUILD_GRADLE_KTS_TEMPLATE, map);
+        return this.applyTemplate(project, SPIGOT_BUILD_GRADLE_KTS_TEMPLATE, map);
     }
 
     private Map<String, String> readMavenVersions() {

@@ -11,13 +11,13 @@ public class FrameworkTemplates implements FileTemplateGroupDescriptorFactory {
         FileTemplateGroupDescriptor group = new FileTemplateGroupDescriptor("Framework", FairyAssets.FRAMEWORK_LOGO);
 
         final FileTemplateGroupDescriptor bukkitGroup = new FileTemplateGroupDescriptor("Bukkit", FairyAssets.SPIGOT_LOGO);
-        bukkitGroup.addTemplate(new FileTemplateDescriptor(BukkitTemplate.BUKKIT_MAIN_CLASS_TEMPLATE));
-        bukkitGroup.addTemplate(new FileTemplateDescriptor(BukkitTemplate.BUKKIT_MAIN_CLASS_KOTLIN_TEMPLATE));
-        bukkitGroup.addTemplate(new FileTemplateDescriptor(BukkitTemplate.BUKKIT_POM_TEMPLATE));
-        bukkitGroup.addTemplate(new FileTemplateDescriptor(BukkitTemplate.BUKKIT_BUILD_GRADLE_TEMPLATE));
-        bukkitGroup.addTemplate(new FileTemplateDescriptor(BukkitTemplate.BUKKIT_GRADLE_PROPERTIES_TEMPLATE));
-        bukkitGroup.addTemplate(new FileTemplateDescriptor(BukkitTemplate.BUKKIT_SETTINGS_GRADLE_TEMPLATE));
-        bukkitGroup.addTemplate(new FileTemplateDescriptor(BukkitTemplate.BUKKIT_BUILD_GRADLE_KTS_TEMPLATE));
+        bukkitGroup.addTemplate(new FileTemplateDescriptor(BukkitTemplate.SPIGOT_MAIN_CLASS_TEMPLATE));
+        bukkitGroup.addTemplate(new FileTemplateDescriptor(BukkitTemplate.SPIGOT_MAIN_CLASS_KOTLIN_TEMPLATE));
+        bukkitGroup.addTemplate(new FileTemplateDescriptor(BukkitTemplate.SPIGOT_POM_TEMPLATE));
+        bukkitGroup.addTemplate(new FileTemplateDescriptor(BukkitTemplate.SPIGOT_BUILD_GRADLE_TEMPLATE));
+        bukkitGroup.addTemplate(new FileTemplateDescriptor(BukkitTemplate.SPIGOT_GRADLE_PROPERTIES_TEMPLATE));
+        bukkitGroup.addTemplate(new FileTemplateDescriptor(BukkitTemplate.SPIGOT_SETTINGS_GRADLE_TEMPLATE));
+        bukkitGroup.addTemplate(new FileTemplateDescriptor(BukkitTemplate.SPIGOT_BUILD_GRADLE_KTS_TEMPLATE));
         group.addTemplate(bukkitGroup);
 
         final FileTemplateGroupDescriptor commonGroup = new FileTemplateGroupDescriptor("Common", FairyAssets.FRAMEWORK_LOGO);

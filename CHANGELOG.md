@@ -4,6 +4,13 @@
 
 ## [Unreleased]
 
+## [0.3.5]
+### Changed
+- Bump Fairy version to 0.4b5
+
+### Fixed
+- Fixed Conflict with MinecraftDev
+
 ## [0.3.4]
 ### Fixed
 - Fixed Gradle Plugins

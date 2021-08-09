@@ -47,7 +47,7 @@ public class FairyIntelliJ {
 
     public String getLatestFrameworkVersion() {
         // TODO - Cloud fetch
-        return "0.4b4";
+        return "0.4b5";
     }
 
 }
