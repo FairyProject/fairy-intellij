@@ -1,17 +1,10 @@
-import org.apache.tools.ant.filters.ReplaceTokens
-
-
-buildscript {
-    repositories {
-        jcenter()
-    }
-    dependencies {
-        classpath "com.github.sedovalx.gradle:gradle-aspectj-binary:1.0.45"
-    }
+plugins {
+    id 'base'
+    id 'io.freefair.aspectj.post-compile-weaving' version '6.1.0'
 }
 
 apply plugin: 'java'
-apply plugin: 'com.github.sedovalx.gradle-aspectj-binary'
+apply plugin: 'io.freefair.aspectj.post-compile-weaving'
 
 group = '${GROUP_ID}'
 version = '${VERSION}'
@@ -19,24 +12,17 @@ version = '${VERSION}'
 repositories {
 }
 
-aspectjBinary {
-    applyJavaPlugin = true
-    weaveClasses {
-        ajcSourceSets = [project.sourceSets.main]
-        source = '1.8'
-        target = '1.8'
-        additionalAjcParams = ['-proceedOnError']
-        writeToLog = true
-    }
+sourceCompatibility = targetCompatibility = '1.8'
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
 }
+
+compileJava.ajc.options.compilerArgs += '-showWeaveInfo'
+compileJava.ajc.options.compilerArgs += '-verbose'
+
+compileTestJava.ajc.options.aspectpath.from sourceSets.main.output
 
 dependencies {
-}
-
-processResources {
-    from(sourceSets.main.resources.srcDirs) {
-        filter ReplaceTokens, tokens: [version: version]
-    }
 }
 
 test {

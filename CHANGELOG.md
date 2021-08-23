@@ -4,6 +4,11 @@
 
 ## [Unreleased]
 
+## [0.3.6]
+### Changed
+- Fixed check for Optional and BeanHolder on Autowired
+- Bump Fairy version to 0.4b6
+
 ## [0.3.5]
 ### Changed
 - Bump Fairy version to 0.4b5

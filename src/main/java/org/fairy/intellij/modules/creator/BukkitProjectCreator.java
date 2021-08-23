@@ -211,7 +211,7 @@ public abstract class BukkitProjectCreator extends BaseProjectCreator {
             this.projectSystem.getBuildDependencies().add(
                     new FairyProjectSystem.BuildDependency(
                             "org.fairy",
-                            "bukkit-all",
+                            "annotationProcessor",
                             FairyIntelliJ.getLatestFrameworkVersion(),
                             "none",
                             "annotationProcessor",

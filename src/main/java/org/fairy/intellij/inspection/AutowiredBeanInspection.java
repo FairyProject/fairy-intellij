@@ -1,7 +1,11 @@
 package org.fairy.intellij.inspection;
 
 import com.intellij.codeInspection.util.InspectionMessage;
+import com.intellij.psi.PsiClass;
+import com.intellij.psi.PsiClassType;
 import com.intellij.psi.PsiField;
+import com.intellij.psi.PsiType;
+import com.intellij.psi.util.PsiTypesUtil;
 import com.siyeh.ig.BaseInspection;
 import com.siyeh.ig.BaseInspectionVisitor;
 import org.fairy.intellij.FairyIntelliJ;
@@ -31,10 +35,19 @@ public class AutowiredBeanInspection extends BaseInspection {
                 if (!field.hasAnnotation(ClassConstants.AUTOWIRED_CLASS)) {
                     return;
                 }
-                if (FairyIntelliJ.isBean(field.getType())) {
+                PsiType type = field.getType();
+                final PsiClass psiClass = PsiTypesUtil.getPsiClass(type);
+                final String qualifiedName = psiClass.getQualifiedName();
+                if (type instanceof PsiClassType
+                        && ((PsiClassType) type).hasParameters()
+                        && qualifiedName != null
+                        && (qualifiedName.equals(ClassConstants.OPTIONAL_CLASS) || qualifiedName.equals(ClassConstants.BEAN_HOLDER_CLASS))) {
+                    type = ((PsiClassType) type).getParameters()[0];
+                }
+                if (FairyIntelliJ.isBean(type)) {
                     return;
                 }
-                registerFieldError(field, field.getType().getCanonicalText() + " is not a verified bean.");
+                registerFieldError(field, type.getCanonicalText() + " is not a verified bean.");
             }
 
         };
